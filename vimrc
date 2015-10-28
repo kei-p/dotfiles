@@ -4,8 +4,8 @@ if has('vim_starting')
   filetype plugin off
   filetype indent off
   execute 'set runtimepath+=' . expand('~/.vim/bundle/neobundle.vim')
+  execute 'set runtimepath+=' . expand('~/.vim/bundle/vimproc.vim')
 endif
-
 
 set nocompatible
 set backspace=start,eol,indent
