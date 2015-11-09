@@ -45,6 +45,11 @@ nmap <Esc><Esc> :nohlsearch<CR><Esc>
 " Unite.vim bufferの起動
 nnoremap <C-h> :Unite file_mru<CR>
 
+"" Leader
+let mapleader = "\<Space>"
+nnoremap <Leader>o :CtrlP<CR>
+nnoremap <Leader>w :w<CR>
+
 "" NeoBundle
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundle 'git://github.com/kien/ctrlp.vim.git'
