@@ -52,10 +52,10 @@ nnoremap <Leader>w :w<CR>
 
 "" NeoBundle
 call neobundle#begin(expand('~/.vim/bundle/'))
-NeoBundle 'git://github.com/kien/ctrlp.vim.git'
-NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
-NeoBundle 'git://github.com/scrooloose/nerdtree.git'
-NeoBundle 'git://github.com/scrooloose/syntastic.git'
+NeoBundle 'kien/ctrlp.vim.git'
+NeoBundle 'Shougo/neobundle.vim.git'
+NeoBundle 'scrooloose/nerdtree.git'
+NeoBundle 'scrooloose/syntastic.git'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
@@ -63,7 +63,7 @@ NeoBundle 'tpope/vim-rails'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'tyru/caw.vim.git'
-NeoBundle 'https://github.com/cocopon/colorswatch.vim'
+NeoBundle 'cocopon/colorswatch.vim'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'tpope/vim-endwise'
 NeoBundle 'tomasr/molokai'
