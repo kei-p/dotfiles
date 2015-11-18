@@ -1,9 +1,2 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/Users/Keisuke/sandbox/rails420_redshift_rails/vendor/bundle/ruby/2.1.0/bundler/gems/activerecord4-redshift-adapter-72692fd7e08d/lib/active_record/connection_adapters'
-let g:netrw_dirhist_2='/Users/Keisuke/server/RecipeBook/app/RecipeBook/vendor/bundle/ruby/2.1.0/bundler/gems/activerecord4-redshift-adapter-f32e016587ca/lib/active_record/connection_adapters/redshift'
-let g:netrw_dirhist_3='/Users/Keisuke/server/RecipeBook/app/RecipeBook/vendor/bundle/ruby/2.1.0/bundler/gems/activerecord4-redshift-adapter-f32e016587ca/lib/active_record/connection_adapters/redshift/oid'
-let g:netrw_dirhist_4='/Users/Keisuke/server/RecipeBook/app/RecipeBook/vendor/bundle/ruby/2.1.0/bundler/gems/activerecord4-redshift-adapter-f32e016587ca/lib/active_record/connection_adapters/redshift'
-let g:netrw_dirhist_5='/Users/Keisuke/server/RecipeBook/app/RecipeBook/vendor/bundle/ruby/2.1.0/bundler/gems/activerecord4-redshift-adapter-f32e016587ca/lib/active_record/connection_adapters'
-let g:netrw_dirhist_6='/Users/Keisuke/projects/RecipeBook/server/RecipeBook-app/vendor/bundle/ruby/2.1.0/gems/devise-3.4.1'
-let g:netrw_dirhist_7='/Users/Keisuke/projects/RecipeBook/server/RecipeBook-app/vendor/bundle/ruby/2.1.0/bundler/gems/active_admin-e3a7354c0196'
+let g:netrw_dirhist_cnt =0
