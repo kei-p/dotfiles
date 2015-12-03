@@ -49,6 +49,7 @@ nnoremap <C-h> :Unite file_mru<CR>
 let mapleader = "\<Space>"
 nnoremap <Leader>o :CtrlP<CR>
 nnoremap <Leader>w :w<CR>
+nnoremap <Leader>p :reg<CR>
 
 "" NeoBundle
 call neobundle#begin(expand('~/.vim/bundle/'))
