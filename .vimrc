@@ -36,6 +36,16 @@ nnoremap <C-Down> G
 nnoremap <C-Up> gg
 nnoremap <C-Right> $
 nnoremap <C-Left> <S-0>
+" カーソルを自動的に()の中へ
+imap {} {}<Left>
+imap [] []<Left>
+imap () ()<Left>
+imap "" ""<Left>
+imap '' ''<Left>
+imap <> <><Left>
+imap // //<left>
+imap /// ///<left>
+
 " 文字列検索のハイライト制御
 nnoremap / :<C-u>set hlsearch<Return>/
 nnoremap ? :<C-u>set hlsearch<Return>?
