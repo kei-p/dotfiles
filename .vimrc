@@ -65,6 +65,7 @@ let mapleader = "\<Space>"
 nnoremap <Leader>o :CtrlP<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>p :reg<CR>
+nnoremap <Leader>b :ls<CR>
 
 "" NeoBundle
 call neobundle#begin(expand('~/.vim/bundle/'))
