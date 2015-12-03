@@ -45,6 +45,11 @@ imap '' ''<Left>
 imap <> <><Left>
 imap // //<left>
 imap /// ///<left>
+" バッファーの切り替え
+noremap <silent> [b :bprevious<CR>
+noremap <silent> ]b :bnext<CR>
+noremap <silent> [B :bfirst<CR>
+noremap <silent> ]B :bprevious<CR>
 
 " 文字列検索のハイライト制御
 nnoremap / :<C-u>set hlsearch<Return>/
