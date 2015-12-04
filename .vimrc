@@ -66,6 +66,7 @@ nnoremap <Leader>o :CtrlP<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>p :reg<CR>
 nnoremap <Leader>b :ls<CR>
+nnoremap <Leader>m :marks<CR>
 
 "" NeoBundle
 call neobundle#begin(expand('~/.vim/bundle/'))
@@ -86,6 +87,7 @@ NeoBundle 'tpope/vim-endwise'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'bronson/vim-trailing-whitespace'
+NeoBundle 'jacquesbh/vim-showmarks'
 call neobundle#end()
 
 
@@ -138,6 +140,11 @@ let g:lightline = {
       \ }
       \ }
 
+"" vim-showmarks
+aug show-marks-sync
+  au!
+  au BufReadPost * sil! DoShowMarks
+aug END
 
 "" handle cursorline
 augroup vimrc-auto-cursorline
