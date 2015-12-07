@@ -11,7 +11,7 @@ set nocompatible
 set backspace=start,eol,indent
 
 set number
-set clipboard=unnamed,autoselect
+set clipboard=unnamed
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
