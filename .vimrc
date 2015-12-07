@@ -60,6 +60,9 @@ nmap <Esc><Esc> :nohlsearch<CR><Esc>
 " Unite.vim bufferの起動
 nnoremap <C-h> :Unite file_mru<CR>
 
+" 連続コピペ
+vnoremap <silent> <C-p> "0p
+
 "" Leader
 let mapleader = "\<Space>"
 nnoremap <Leader>o :CtrlP<CR>
