@@ -14,4 +14,4 @@ deploy:
 init:
 		@$(foreach val, $(wildcard ./etc/init/*.sh), DOTFILES_DIR=$(DOTFILES_DIR) bash $(val);)
 
-install: init deploy
+install: deploy init
