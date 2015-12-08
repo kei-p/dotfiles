@@ -17,6 +17,7 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 set hlsearch
+set incsearch
 
 
 " 特殊記号の表示変更
