@@ -72,6 +72,16 @@ nnoremap <Leader>p :reg<CR>
 nnoremap <Leader>b :ls<CR>
 nnoremap <Leader>m :marks<CR>
 
+xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
+
+function! s:VSetSearch()
+  let temp = @s
+  norm! gv"sy
+  let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
+  let @s = temp
+endfunction
+
 "" NeoBundle
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundle 'kien/ctrlp.vim.git'
