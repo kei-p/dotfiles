@@ -82,6 +82,14 @@ function! s:VSetSearch()
   let @s = temp
 endfunction
 
+"" for vim trainee option
+if $VIM_TRAINEE
+  noremap <Down> <Nop>
+  noremap <Up> <Nop>
+  noremap <Right> <Nop>
+  noremap <Left> <Nop>
+endif
+
 "" NeoBundle
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundle 'kien/ctrlp.vim.git'
@@ -192,7 +200,6 @@ augroup vimrc-auto-cursorline
 augroup END
 
 runtime macros/matchit.vim
-
 
 filetype plugin on
 filetype indent on
