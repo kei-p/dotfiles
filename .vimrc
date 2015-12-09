@@ -75,6 +75,9 @@ nnoremap <Leader>m :marks<CR>
 xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
 xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
 
+"" grepでcwindowを自動起動
+autocmd QuickFixCmdPost *grep* cwindow
+
 function! s:VSetSearch()
   let temp = @s
   norm! gv"sy
