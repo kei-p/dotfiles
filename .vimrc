@@ -64,7 +64,7 @@ nnoremap <C-h> :Unite file_mru<CR>
 " 連続コピペ
 vnoremap <silent> <C-p> "0p
 
-"" Leader
+" Leader
 let mapleader = "\<Space>"
 nnoremap <Leader>o :CtrlP<CR>
 nnoremap <Leader>w :w<CR>
@@ -72,11 +72,9 @@ nnoremap <Leader>p :reg<CR>
 nnoremap <Leader>b :ls<CR>
 nnoremap <Leader>m :marks<CR>
 
+" visualモードから検索
 xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
 xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
-
-"" grepでcwindowを自動起動
-autocmd QuickFixCmdPost *grep* cwindow
 
 function! s:VSetSearch()
   let temp = @s
@@ -84,6 +82,10 @@ function! s:VSetSearch()
   let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
   let @s = temp
 endfunction
+
+
+" grepでcwindowを自動起動
+autocmd QuickFixCmdPost *grep* cwindow
 
 function! s:ToggleQuickFixWindow()
   let _ = winnr('$')
@@ -97,7 +99,7 @@ nnoremap <silent> <C-q> :<C-u>call <SID>ToggleQuickFixWindow()<CR>
 nnoremap <silent> <C-m> :cnext<CR>
 nnoremap <silent> <C-n> :cprevious<CR>
 
-"" for vim trainee option
+" for vim trainee option
 if $VIM_TRAINEE
   noremap <Down> <Nop>
   noremap <Up> <Nop>
