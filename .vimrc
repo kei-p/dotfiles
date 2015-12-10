@@ -85,6 +85,18 @@ function! s:VSetSearch()
   let @s = temp
 endfunction
 
+function! s:ToggleQuickFixWindow()
+  let _ = winnr('$')
+  cclose
+  if _ == winnr('$')
+    copen
+  endif
+endfunction
+
+nnoremap <silent> <C-q> :<C-u>call <SID>ToggleQuickFixWindow()<CR>
+nnoremap <silent> <C-m> :cnext<CR>
+nnoremap <silent> <C-n> :cprevious<CR>
+
 "" for vim trainee option
 if $VIM_TRAINEE
   noremap <Down> <Nop>
