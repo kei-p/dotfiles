@@ -19,7 +19,6 @@ set expandtab
 set hlsearch
 set incsearch
 
-
 " 特殊記号の表示変更
 set list
 set listchars=tab:>\ ,eol:$
@@ -37,6 +36,7 @@ nnoremap <C-Down> G
 nnoremap <C-Up> gg
 nnoremap <C-Right> $
 nnoremap <C-Left> <S-0>
+
 " カーソルを自動的に()の中へ
 imap {} {}<Left>
 imap [] []<Left>
@@ -46,6 +46,7 @@ imap '' ''<Left>
 imap <> <><Left>
 imap // //<left>
 imap /// ///<left>
+
 " バッファーの切り替え
 noremap <silent> [b :bprevious<CR>
 noremap <silent> ]b :bnext<CR>
@@ -58,6 +59,7 @@ nnoremap ? :<C-u>set hlsearch<Return>?
 nnoremap * :<C-u>set hlsearch<Return>*
 nnoremap # :<C-u>set hlsearch<Return>#
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
+
 " Unite.vim bufferの起動
 nnoremap <C-h> :Unite file_mru<CR>
 
@@ -73,20 +75,18 @@ nnoremap <Leader>b :ls<CR>
 nnoremap <Leader>m :marks<CR>
 
 " visualモードから検索
-xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
-xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
-
 function! s:VSetSearch()
   let temp = @s
   norm! gv"sy
   let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
   let @s = temp
 endfunction
+xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
 
-
+"" Quickfix
 " grepでcwindowを自動起動
 autocmd QuickFixCmdPost *grep* cwindow
-
 function! s:ToggleQuickFixWindow()
   let _ = winnr('$')
   cclose
@@ -96,6 +96,7 @@ function! s:ToggleQuickFixWindow()
 endfunction
 nnoremap <silent> <C-q> :<C-u>call <SID>ToggleQuickFixWindow()<CR>
 
+" quickfixを自動的に閉じる
 function s:QuickFixExitIfOnlyCWindow()
   if winnr('$') == 1
     if (getbufvar(winbufnr(0), '&buftype')) == 'quickfix'
@@ -108,93 +109,7 @@ autocmd WinEnter * call s:QuickFixExitIfOnlyCWindow()
 nnoremap <silent> <C-m> :cnext<CR>
 nnoremap <silent> <C-n> :cprevious<CR>
 
-" for vim trainee option
-if $VIM_TRAINEE
-  noremap <Down> <Nop>
-  noremap <Up> <Nop>
-  noremap <Right> <Nop>
-  noremap <Left> <Nop>
-endif
-
-"" NeoBundle
-call neobundle#begin(expand('~/.vim/bundle/'))
-NeoBundle 'kien/ctrlp.vim.git'
-NeoBundle 'Shougo/neobundle.vim.git'
-NeoBundle 'scrooloose/nerdtree.git'
-NeoBundle 'scrooloose/syntastic.git'
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'tyru/caw.vim.git'
-NeoBundle 'cocopon/colorswatch.vim'
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'tpope/vim-endwise'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'bronson/vim-trailing-whitespace'
-NeoBundle 'jacquesbh/vim-showmarks'
-call neobundle#end()
-
-
-"" colorscheme
-let g:rehash256 = 1
-colorscheme molokai
-colorscheme custom
-syntax on
-
-
-"" NERDTree
-autocmd vimenter * if !argc() | NERDTree | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-let g:NERDTreeIgnore=['\.clean$', '\.swp$', '\.bak$', '\~$']
-" <C-e>でNERDTreeをオンオフ いつでもどこでも
-nmap <silent> <C-e>      :NERDTreeToggle<CR>
-vmap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
-omap <silent> <C-e>      :NERDTreeToggle<CR>
-imap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
-cmap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
-
-
-"" Neocomplecache settings
-let g:neocomplcache_enable_at_startup = 1
-
-
-"" vim-indent-guides
-let g:indent_guides_enable_on_vim_startup=1
-let g:indent_guides_guide_size=4
-let g:indent_guides_auto_colors=0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermfg=241 ctermbg=236
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermfg=241 ctermbg=237
-
-
-"" caw
-map <C-c> <Plug>(caw:i:toggle)
-
-
-"" lightline
-set laststatus=2
-set guifont=Ricty-RegularForPowerline
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'inactive': {
-      \   'right': [  ]
-      \ },
-      \ 'component': {
-      \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
-      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
-      \ }
-      \ }
-
-"" vim-showmarks
-aug show-marks-sync
-  au!
-  au BufReadPost * sil! DoShowMarks
-aug END
-
-"" handle cursorline
+" 待機中のカーソル行をハイライト
 augroup vimrc-auto-cursorline
   autocmd!
   autocmd CursorMoved,CursorMovedI * call s:auto_cursorline('CursorMoved')
@@ -225,7 +140,91 @@ augroup vimrc-auto-cursorline
   endfunction
 augroup END
 
+" vim練習用オプション
+if $VIM_TRAINEE
+  "" 矢印無効化
+  noremap <Down> <Nop>
+  noremap <Up> <Nop>
+  noremap <Right> <Nop>
+  noremap <Left> <Nop>
+endif
+
+
+"" NeoBundle
+call neobundle#begin(expand('~/.vim/bundle/'))
+NeoBundle 'kien/ctrlp.vim.git'
+NeoBundle 'Shougo/neobundle.vim.git'
+NeoBundle 'scrooloose/nerdtree.git'
+NeoBundle 'scrooloose/syntastic.git'
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'tpope/vim-rails'
+NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'tyru/caw.vim.git'
+NeoBundle 'cocopon/colorswatch.vim'
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'tpope/vim-endwise'
+NeoBundle 'tomasr/molokai'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'bronson/vim-trailing-whitespace'
+NeoBundle 'jacquesbh/vim-showmarks'
+call neobundle#end()
+
+"" colorscheme
+let g:rehash256 = 1
+colorscheme molokai
+colorscheme custom
+syntax on
+
+"" NERDTree
+autocmd vimenter * if !argc() | NERDTree | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+let g:NERDTreeIgnore=['\.clean$', '\.swp$', '\.bak$', '\~$']
+" <C-e>でNERDTreeをオンオフ いつでもどこでも
+nmap <silent> <C-e>      :NERDTreeToggle<CR>
+vmap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
+omap <silent> <C-e>      :NERDTreeToggle<CR>
+imap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
+cmap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
+
+"" Neocomplecache settings
+let g:neocomplcache_enable_at_startup = 1
+
+"" vim-indent-guides
+let g:indent_guides_enable_on_vim_startup=1
+let g:indent_guides_guide_size=4
+let g:indent_guides_auto_colors=0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermfg=241 ctermbg=236
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermfg=241 ctermbg=237
+
+"" caw
+map <C-c> <Plug>(caw:i:toggle)
+
+"" lightline
+set laststatus=2
+set guifont=Ricty-RegularForPowerline
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'inactive': {
+      \   'right': [  ]
+      \ },
+      \ 'component': {
+      \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
+      \ }
+      \ }
+
+"" vim-showmarks
+aug show-marks-sync
+  au!
+  au BufReadPost * sil! DoShowMarks
+aug END
+
+"" matchit
 runtime macros/matchit.vim
+
 
 filetype plugin on
 filetype indent on
