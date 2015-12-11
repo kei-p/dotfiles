@@ -94,8 +94,17 @@ function! s:ToggleQuickFixWindow()
     copen
   endif
 endfunction
-
 nnoremap <silent> <C-q> :<C-u>call <SID>ToggleQuickFixWindow()<CR>
+
+function s:QuickFixExitIfOnlyCWindow()
+  if winnr('$') == 1
+    if (getbufvar(winbufnr(0), '&buftype')) == 'quickfix'
+      quit
+    endif
+  endif
+endfunction
+autocmd WinEnter * call s:QuickFixExitIfOnlyCWindow()
+
 nnoremap <silent> <C-m> :cnext<CR>
 nnoremap <silent> <C-n> :cprevious<CR>
 
