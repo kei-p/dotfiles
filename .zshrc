@@ -19,7 +19,6 @@ compinit -u
 # autoload predict-on
 # predict-on
 
-
 ## command history
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
@@ -27,10 +26,6 @@ zle -N history-beginning-search-forward-end history-search-end
 # コマンド検索でCtr-sが使えるようにする
 stty stop undef
 stty start undef
-
-
-export EDITOR=/usr/bin/vim
-eval "$(direnv hook zsh)"
 
 # git Prompt Setting
 GIT_PS1_SHOWDIRTYSTATE=1
