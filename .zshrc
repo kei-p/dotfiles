@@ -11,7 +11,6 @@ setopt pushd_ignore_dups  # pushd時の重複を無視
 setopt ignore_eof         # ^Dでログアウトを無効化
 setopt hist_ignore_space  # スペースで始まるコマンド行はヒストリリストから削除
 
-
 # コマンド補完の設定
 autoload -U compinit
 compinit -u
@@ -59,3 +58,5 @@ if [[ -f $HOME/.zsh/antigen/antigen.zsh ]]; then
   ENHANCD_FILTER=peco; export ENHANCD_FILTER
 fi
 
+# direnv
+if which direnv > /dev/null; then eval "$(direnv hook zsh)"; fi
