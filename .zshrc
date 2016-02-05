@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+bindkey -e
+
 # コマンド単位の移動
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
