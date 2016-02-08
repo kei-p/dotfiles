@@ -15,3 +15,6 @@ init:
 		@$(foreach val, $(wildcard ./etc/init/*.sh), DOTFILES_DIR=$(DOTFILES_DIR) bash $(val);)
 
 install: deploy init
+
+update:
+		git checkout master && git pull --rebase origin master
