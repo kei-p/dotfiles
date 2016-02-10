@@ -170,6 +170,7 @@ NeoBundle 'tomasr/molokai'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'jacquesbh/vim-showmarks'
+NeoBundle 'mtth/scratch.vim'
 call neobundle#end()
 
 "" colorscheme
