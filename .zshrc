@@ -34,7 +34,9 @@ GIT_PS1_SHOWUPSTREAM=1
 GIT_PS1_SHOWUNTRACKEDFILES=1
 GIT_PS1_SHOWSTASHSTATE=1
 source ~/.zsh/git-prompt.sh
-function git(){hub "$@"}
+
+## git command replace to hub
+if which hub > /dev/null; then function git(){hub "$@"}; fi
 
 ## Prompt
 setopt prompt_subst
