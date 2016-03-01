@@ -37,16 +37,6 @@ nnoremap <C-Up> gg
 nnoremap <C-Right> $
 nnoremap <C-Left> <S-0>
 
-" カーソルを自動的に()の中へ
-imap {} {}<Left>
-imap [] []<Left>
-imap () ()<Left>
-imap "" ""<Left>
-imap '' ''<Left>
-imap <> <><Left>
-imap // //<left>
-imap /// ///<left>
-
 " バッファーの切り替え
 noremap <silent> [b :bprevious<CR>
 noremap <silent> ]b :bnext<CR>
