@@ -35,4 +35,5 @@ Session.vim
 .netrwhist
 *~
 
-
+### envrc
+.envrc
