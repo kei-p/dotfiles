@@ -161,6 +161,7 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'jacquesbh/vim-showmarks'
 NeoBundle 'mtth/scratch.vim'
+NeoBundle 'tpope/vim-fugitive.git'
 call neobundle#end()
 
 "" colorscheme
