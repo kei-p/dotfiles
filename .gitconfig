@@ -1,14 +1,14 @@
 [user]
-	name = Keisuke Ishizawa
+  name = Keisuke Ishizawa
   email = k_ishizawa@sfidante.co.jp
 [core]
   excludesfile = /Users/Keisuke/.gitignore_global
   editor = vim -c \"set fenc=utf-8\"
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
 [alias]
   ctree = log --color --graph --date-order --pretty=format:'%x09%C(yellow)%h%Creset%x09%C(red)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   tree = log --color --graph --date-order --all --pretty=format:'%x09%C(yellow)%h%Creset%x09%C(red)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
