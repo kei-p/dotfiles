@@ -11,7 +11,6 @@ set nocompatible
 set backspace=start,eol,indent
 
 set number
-set clipboard=unnamed
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
@@ -63,6 +62,14 @@ nnoremap <Leader>w :w<CR>
 nnoremap <Leader>" :reg<CR>
 nnoremap <Leader>b :ls<CR>
 nnoremap <Leader>` :marks<CR>
+
+" clipboard へ ヤンク/ペースト
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
 
 " visualモードから検索
 function! s:VSetSearch()
