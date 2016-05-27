@@ -81,6 +81,17 @@ endfunction
 xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
 xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
 
+"" visualモードでのペーストによる置き換え時にペーストバッファを保持
+function! RestoreRegister()
+  let @" = s:restore_reg
+  return ''
+endfunction
+function! s:Repl()
+  let s:restore_reg = @"
+  return "p@=RestoreRegister()\<cr>"
+endfunction
+vmap <silent> <expr> p <sid>Repl()
+
 "" Quickfix
 " grepでcwindowを自動起動
 autocmd QuickFixCmdPost *grep* cwindow
