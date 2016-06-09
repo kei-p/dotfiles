@@ -13,6 +13,7 @@
   ctree = log --color --graph --date-order --pretty=format:'%x09%C(yellow)%h%Creset%x09%C(red)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   tree = log --color --graph --date-order --all --pretty=format:'%x09%C(yellow)%h%Creset%x09%C(red)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   ck = checkout
+  dfcached = diff --cached
   pff = pull --ff-only
   prebase = pull --rebase
   fprune = fetch --prune
