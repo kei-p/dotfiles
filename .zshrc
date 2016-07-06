@@ -5,6 +5,7 @@ bindkey -e
 # コマンド単位の移動
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
+bindkey \^U backward-kill-line
 
 ## zsh settings
 setopt share_history      # historyの共有
