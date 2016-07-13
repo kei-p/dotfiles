@@ -59,6 +59,7 @@ vnoremap <silent> <C-p> "0p
 let mapleader = "\<Space>"
 nnoremap <Leader>o :CtrlP<CR>
 nnoremap <Leader>w :w<CR>
+nnoremap <Leader>q :q<CR>
 nnoremap <Leader>" :reg<CR>
 nnoremap <Leader>b :ls<CR>
 nnoremap <Leader>` :marks<CR>
