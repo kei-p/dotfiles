@@ -189,6 +189,7 @@ let g:rehash256 = 1
 colorscheme molokai
 colorscheme custom
 syntax on
+highlight Normal ctermbg=none
 
 "" NERDTree
 autocmd vimenter * if !argc() | NERDTree | endif
