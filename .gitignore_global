@@ -38,3 +38,10 @@ Session.vim
 ### envrc
 .env
 .envrc
+
+### rubymine
+.idea
+
+### powder
+.powenv
+
