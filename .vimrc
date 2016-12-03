@@ -192,7 +192,6 @@ syntax on
 highlight Normal ctermbg=none
 
 "" NERDTree
-autocmd vimenter * if !argc() | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 let g:NERDTreeIgnore=['\.clean$', '\.bak$', '\~$']
 " <C-e>でNERDTreeをオンオフ いつでもどこでも
