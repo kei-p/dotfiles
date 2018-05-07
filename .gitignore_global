@@ -35,13 +35,14 @@ Session.vim
 .netrwhist
 *~
 
-### envrc
+### dev
 .env
 .envrc
-
-### rubymine
 .idea
-
-### powder
 .powenv
+.byebug_history
+dump.rdb
+yarn-error.log
 
+node_modules
+public/packs
