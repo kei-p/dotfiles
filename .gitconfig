@@ -24,6 +24,7 @@
   dbranch = branch -D
   cbranch = "!f(){ git nbranch \"$2\" \"$1/$2\";};f"
   close-issue = "!f(){ git commit --allow-empty -m \"Closed #$1\";};f"
+  delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
 [color]
   ui = auto
 [log]
