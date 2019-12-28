@@ -36,25 +36,5 @@ zle -N history-beginning-search-forward-end history-search-end
 stty stop undef
 stty start undef
 
-# git Prompt Setting
-GIT_PS1_SHOWDIRTYSTATE=1
-GIT_PS1_SHOWUPSTREAM=1
-GIT_PS1_SHOWUNTRACKEDFILES=1
-GIT_PS1_SHOWSTASHSTATE=1
-source ~/.zsh/git-prompt.sh
-
 ## git command replace to hub
 if which hub > /dev/null; then function git(){hub "$@"}; fi
-
-## Prompt
-setopt prompt_subst
-PROMPT=\
-'%n %F{blue}%c %F{red}$(__git_ps1 "[%s] ")
-%F{black}$ %f'
-RPROMPT='%F{green}[%*]%f'
-
-## iterm2 prompt
-precmd() {
-  echo -ne "\033]0;$(pwd | sed -e "s;$HOME\/;~/;g")\007"
-}
-
