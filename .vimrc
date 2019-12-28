@@ -180,6 +180,10 @@ NeoBundle 'jacquesbh/vim-showmarks'
 NeoBundle 'mtth/scratch.vim'
 NeoBundle 'tpope/vim-fugitive.git'
 NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'mechatroner/rainbow_csv'
+NeoBundle 'posva/vim-vue'
+NeoBundle 'kamykn/spelunker.vim'
+NeoBundle 'Quramy/tsuquyomi'
 call neobundle#end()
 
 "" colorscheme
