@@ -8,14 +8,12 @@ zplugin load "${LOCAL_ZSHRC_DIR}/zsh-settings.zsh"
 zplugin light "zsh-users/zsh-syntax-highlighting"
 zplugin light "zsh-users/zsh-completions"
 zplugin load "b4b4r07/enhancd"
+zplugin atload"!source ${LOCAL_ZSHRC_DIR}/p10k.zsh" lucid nocd
 zplugin light "romkatv/powerlevel10k"
 zplugin atload"!source ${LOCAL_ZSHRC_DIR}/anyframe.zsh" lucid nocd
 zplugin light "mollifier/anyframe"
 
 export ENHANCD_FILTER=peco
-
-# prompt の設定
-source "${LOCAL_ZSHRC_DIR}/p10k.zsh"
 
 # iterm2 prompt
 precmd() {
