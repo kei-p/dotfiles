@@ -2,7 +2,7 @@ source "${HOME}/dotfiles/.zsh/zplugin/zplugin.zsh"
 autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 
-LOCAL_ZSHRC_DIR=${HOME}/dotfiles/zshrc
+LOCAL_ZSHRC_DIR=${HOME}/dotfiles/.zsh/rc
 
 zplugin load "${LOCAL_ZSHRC_DIR}/zsh-settings.zsh"
 zplugin light "zsh-users/zsh-syntax-highlighting"
