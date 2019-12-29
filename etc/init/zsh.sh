@@ -1,6 +1,6 @@
 ## install zplug
-if [ -e $DOTFILES_DIR/.zsh/zplug ]; then
-  rm -rf $DOTFILES_DIR/.zsh/zplug
+if [ -e $DOTFILES_DIR/.zsh/zplugin ]; then
+  rm -rf $DOTFILES_DIR/.zsh/zplugin
 fi
 
-git clone https://github.com/zplug/zplug.git $DOTFILES_DIR/.zsh/zplug
+git clone https://github.com/zdharma/zplugin.git $DOTFILES_DIR/.zsh/zplugin

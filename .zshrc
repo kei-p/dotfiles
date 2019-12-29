@@ -1,26 +1,16 @@
-export ZPLUG_HOME=${HOME}/.zsh/zplug
-source ${ZPLUG_HOME}/init.zsh
+source "${HOME}/dotfiles/.zsh/zplugin/zplugin.zsh"
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+
 LOCAL_ZSHRC_DIR=${HOME}/dotfiles/zshrc
 
-zplug "${LOCAL_ZSHRC_DIR}/zsh-settings.zsh", from:local
-zplug "zsh-users/zsh-syntax-highlighting"
-zplug "zsh-users/zsh-completions"
-zplug "olivierverdier/zsh-git-prompt", use:zshrc.sh
-zplug "b4b4r07/enhancd", use:init.sh
-zplug romkatv/powerlevel10k, as:theme, depth:1
+zplugin load "${LOCAL_ZSHRC_DIR}/zsh-settings.zsh"
+zplugin light "zsh-users/zsh-syntax-highlighting"
+zplugin light "zsh-users/zsh-completions"
+zplugin load "b4b4r07/enhancd"
+zplugin light "romkatv/powerlevel10k"
 
 export ENHANCD_FILTER=peco
-
-# 未インストール項目をインストールする
-if ! zplug check; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-
-# コマンドをリンクして、PATH に追加し、プラグインは読み込む
-zplug load
 
 # prompt の設定
 source "${LOCAL_ZSHRC_DIR}/p10k.zsh"

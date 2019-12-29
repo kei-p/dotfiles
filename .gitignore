@@ -2,5 +2,6 @@
 .vim/bundle
 .zsh/antigen
 .zsh/zplug
+.zsh/zplugin
 
 .vim/.netrwhist
