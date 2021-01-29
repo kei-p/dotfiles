@@ -44,5 +44,9 @@ Session.vim
 dump.rdb
 yarn-error.log
 
+.vscode/*
+
 node_modules
 public/packs
+.node-version
+.direnv
