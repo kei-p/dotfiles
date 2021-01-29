@@ -17,6 +17,9 @@ zplugin light "mollifier/anyframe"
 
 export ENHANCD_FILTER=peco
 
+# Ctrl+U の動きを bash に揃える
+bindkey \^U backward-kill-line
+
 # iterm2 prompt
 precmd() {
   echo -ne "\033]0;$(pwd | sed -e "s;$HOME\/;~/;g")\007"
