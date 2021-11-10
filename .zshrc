@@ -1,19 +1,19 @@
-source "${HOME}/dotfiles/.zsh/zplugin/zplugin.zsh"
+source "${HOME}/dotfiles/.zsh/zinit/zinit.zsh"
 
-autoload -Uz _zplugin
-(( ${+_comps} )) && _comps[zplugin]=_zplugin
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
 export LOCAL_ZSHRC_DIR=${HOME}/dotfiles/.zsh/rc
 source "${LOCAL_ZSHRC_DIR}/init.zsh"
 
-zplugin load "${LOCAL_ZSHRC_DIR}/zsh-settings.zsh"
-zplugin light "zsh-users/zsh-syntax-highlighting"
-zplugin light "zsh-users/zsh-completions"
-zplugin load "b4b4r07/enhancd"
-zplugin atload"!source ${LOCAL_ZSHRC_DIR}/p10k.zsh" lucid nocd
-zplugin light "romkatv/powerlevel10k"
-zplugin atload"!source ${LOCAL_ZSHRC_DIR}/anyframe.zsh" lucid nocd
-zplugin light "mollifier/anyframe"
+zinit load "${LOCAL_ZSHRC_DIR}/zsh-settings.zsh"
+zinit light "zsh-users/zsh-syntax-highlighting"
+zinit light "zsh-users/zsh-completions"
+zinit load "b4b4r07/enhancd"
+zinit ice lucid atload"!source ${LOCAL_ZSHRC_DIR}/p10k.zsh"
+zinit light "romkatv/powerlevel10k"
+zinit ice lucid atload"!source ${LOCAL_ZSHRC_DIR}/anyframe.zsh"
+zinit light "mollifier/anyframe"
 
 export ENHANCD_FILTER=peco
 
