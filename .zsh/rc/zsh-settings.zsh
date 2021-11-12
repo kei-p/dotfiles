@@ -36,5 +36,8 @@ zle -N history-beginning-search-forward-end history-search-end
 stty stop undef
 stty start undef
 
+# Ctrl+U の動きを bash に揃える
+bindkey \^U backward-kill-line
+
 ## git command replace to hub
 if which hub > /dev/null; then function git(){hub "$@"}; fi
