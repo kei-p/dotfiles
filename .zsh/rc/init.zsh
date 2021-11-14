@@ -1,13 +1,6 @@
-# anyenv
-if [[ -d "${HOME}/.anyenv" ]]
+if [[ "${+commands[asdf]}" == 1 ]]
 then
-  export ANYENV_ROOT="${HOME}/.anyenv"
-  path=( "${ANYENV_ROOT}/bin" "${path[@]}" )
-fi
-
-if [[ "${+commands[anyenv]}" == 1 ]]
-then
-  eval "$(anyenv init - zsh)"
+  source $(brew --prefix asdf)/asdf.sh
 fi
 
 # direnv
