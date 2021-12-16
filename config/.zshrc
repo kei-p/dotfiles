@@ -1,9 +1,11 @@
-source "${HOME}/dotfiles/.zsh/zinit/zinit.zsh"
+export DOTFILES_DIR=${HOME}/dotfiles
+
+source "${DOTFILES_DIR}/.zsh/zinit/zinit.zsh"
 
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-export LOCAL_ZSHRC_DIR=${HOME}/dotfiles/.zsh/rc
+export LOCAL_ZSHRC_DIR=${DOTFILES_DIR}/.zsh/rc
 source "${LOCAL_ZSHRC_DIR}/init.zsh"
 
 zinit snippet "${LOCAL_ZSHRC_DIR}/zsh-settings.zsh"
