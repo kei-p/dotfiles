@@ -1,6 +1,7 @@
 [core]
 	excludesfile = /Users/kei-p/.gitignore_global
   editor = vim -c \"set fenc=utf-8\"
+	hooksPath = ~/git-hooks/hooks
 [difftool "sourcetree"]
   cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 [mergetool "sourcetree"]
