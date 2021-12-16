@@ -1,0 +1,54 @@
+set nocompatible
+set backspace=start,eol,indent
+
+set number
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+set hlsearch
+set incsearch
+set surround
+set multiple-cursors
+set matchit
+
+
+set NERDTree
+map <C-k> <A-n>
+
+set ReplaceWithRegister
+map _ gr
+
+" 特殊記号の表示変更
+set list
+set listchars=tab:>\ ,eol:$
+
+" 文字列検索のハイライト制御
+nnoremap / :<C-u>set hlsearch<Return>/
+nnoremap ? :<C-u>set hlsearch<Return>?
+nnoremap * :<C-u>set hlsearch<Return>*
+nnoremap # :<C-u>set hlsearch<Return>#
+nmap <Esc><Esc> :nohlsearch<CR><Esc>
+
+" Leader
+let mapleader = "\<Space>"
+nnoremap <Leader>o :CtrlP<CR>
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>q :q<CR>
+nnoremap <Leader>" :reg<CR>
+nnoremap <Leader>b :ls<CR>
+nnoremap <Leader>` :marks<CR>
+
+" clipboard へ ヤンク/ペースト
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+
+"" NERDTREE
+map <silent> <C-e>      :NERDTreeToggle<CR>
+
+"" reload ideavimrc
+nnoremap <Leader>si :source ~/.ideavimrc<CR>
