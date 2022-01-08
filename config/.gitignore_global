@@ -51,3 +51,4 @@ public/packs
 .node-version
 .direnv
 .tool-versions
+Procfile.local
