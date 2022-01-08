@@ -19,16 +19,16 @@ map <C-k> <A-n>
 set ReplaceWithRegister
 map _ gr
 
-" 特殊記号の表示変更
-set list
-set listchars=tab:>\ ,eol:$
-
 " 文字列検索のハイライト制御
 nnoremap / :<C-u>set hlsearch<Return>/
 nnoremap ? :<C-u>set hlsearch<Return>?
 nnoremap * :<C-u>set hlsearch<Return>*
 nnoremap # :<C-u>set hlsearch<Return>#
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
+
+" tab 移動
+nmap <C-w>[ :tabprev<CR>
+nmap <C-w>] :tabnext<CR>
 
 " Leader
 let mapleader = "\<Space>"
