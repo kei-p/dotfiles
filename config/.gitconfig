@@ -29,6 +29,8 @@
   decorate = short
 [push]
   default = simple
+[pull]
+  ff = only
 [merge]
   tool = vimdiff
   ff = false
