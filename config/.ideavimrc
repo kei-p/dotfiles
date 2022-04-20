@@ -52,3 +52,6 @@ map <silent> <C-e>      :NERDTreeToggle<CR>
 
 "" reload ideavimrc
 nnoremap <Leader>si :source ~/.ideavimrc<CR>
+
+" visual mode から検索
+vmap / "vy/<C-r>v<CR>
