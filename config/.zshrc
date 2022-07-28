@@ -1,4 +1,4 @@
-export DOTFILES_DIR=${HOME}/dotfiles
+export DOTFILES_DIR=${DOTFILES_DIR:-~/dotfiles)}
 
 source "${DOTFILES_DIR}/.zsh/zinit/zinit.zsh"
 
@@ -14,8 +14,9 @@ zinit light "zsh-users/zsh-completions"
 zinit load "b4b4r07/enhancd"
 zinit ice lucid atload"!source ${LOCAL_ZSHRC_DIR}/p10k.zsh"
 zinit light "romkatv/powerlevel10k"
-zinit ice lucid atload"!source ${LOCAL_ZSHRC_DIR}/anyframe.zsh"
 zinit light "mollifier/anyframe"
+zinit snippet "${LOCAL_ZSHRC_DIR}/util-commands.zsh"
+zinit snippet "${LOCAL_ZSHRC_DIR}/aliases.zsh"
 
 export ENHANCD_FILTER=peco
 
