@@ -52,3 +52,5 @@ public/packs
 .direnv
 .tool-versions
 Procfile.local
+
+config/locales/copy_tuner.yml
