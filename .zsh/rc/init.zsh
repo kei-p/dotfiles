@@ -1,6 +1,6 @@
 if [[ "${+commands[asdf]}" == 1 ]]
 then
-  source $(brew --prefix asdf)/asdf.sh
+  source $(brew --prefix asdf)/libexec/asdf.sh
 fi
 
 # direnv
