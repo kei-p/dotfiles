@@ -54,3 +54,4 @@ public/packs
 Procfile.local
 
 config/locales/copy_tuner.yml
+.bin
