@@ -11,7 +11,8 @@ set incsearch
 set surround
 set multiple-cursors
 set matchit
-
+set ideajoin
+set clipboard=unnamed
 
 set NERDTree
 map <C-k> <A-n>
@@ -40,12 +41,12 @@ nnoremap <Leader>b :ls<CR>
 nnoremap <Leader>` :marks<CR>
 
 " clipboard へ ヤンク/ペースト
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
+vmap <Leader>y "*y
+vmap <Leader>d "*d
+nmap <Leader>p "*p
+nmap <Leader>P "*P
+vmap <Leader>p "*p
+vmap <Leader>P "*P
 
 "" NERDTREE
 map <silent> <C-e>      :NERDTreeToggle<CR>
