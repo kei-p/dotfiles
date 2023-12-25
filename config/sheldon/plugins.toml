@@ -5,8 +5,9 @@ defer = "{{ hooks?.pre | nl }}{% for file in files %}zsh-defer source \"{{ file 
 github = "romkatv/zsh-defer"
 
 [plugins.init]
-local = "/Users/kei-p/ghq/github.com/kei-p/dotfiles/.zsh/rc"
-use = ["init.zsh"]
+local = "/Users/kei-p/ghq/github.com/kei-p/dotfiles/.zsh/rc/init"
+use = ["*.zsh"]
+apply = ["source"]
 
 [plugins.enhancd]
 github = "b4b4r07/enhancd"
@@ -14,6 +15,7 @@ github = "b4b4r07/enhancd"
 [plugins.dotfiles-rc]
 local = "/Users/kei-p/ghq/github.com/kei-p/dotfiles/.zsh/rc"
 use = ["*.zsh"]
+apply = ["defer"]
 
 [plugins.powerlevel10k]
 github = "romkatv/powerlevel10k"
