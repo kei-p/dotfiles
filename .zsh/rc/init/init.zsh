@@ -16,3 +16,8 @@ fpath=(
 )
 autoload -Uz compinit
 compinit
+
+# iterm2 prompt
+precmd() {
+  echo -ne "\033]0;$(pwd | sed -e "s;$HOME\/;~/;g")\007"
+}
