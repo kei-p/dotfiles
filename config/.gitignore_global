@@ -55,3 +55,6 @@ Procfile.local
 
 config/locales/copy_tuner.yml
 .bin
+null
+
+/config/credentials/*.key
