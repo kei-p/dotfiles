@@ -21,3 +21,6 @@ compinit
 precmd() {
   echo -ne "\033]0;$(pwd | sed -e "s;$HOME\/;~/;g")\007"
 }
+
+export STARSHIP_CONFIG=${DOTFILES_DIR}/config/starship.toml
+eval "$(starship init zsh)"
