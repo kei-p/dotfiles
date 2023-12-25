@@ -1,0 +1,32 @@
+[templates]
+defer = "{{ hooks?.pre | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks?.post | nl }}"
+
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+
+[plugins.init]
+local = "/Users/kei-p/ghq/github.com/kei-p/dotfiles/.zsh/rc"
+use = ["init.zsh"]
+
+[plugins.enhancd]
+github = "b4b4r07/enhancd"
+
+[plugins.dotfiles-rc]
+local = "/Users/kei-p/ghq/github.com/kei-p/dotfiles/.zsh/rc"
+use = ["*.zsh"]
+
+[plugins.powerlevel10k]
+github = "romkatv/powerlevel10k"
+
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+apply = ["defer"]
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+
+[plugins.asdf]
+github = "asdf-vm/asdf"
+
+[plugins.anyframe]
+github = "mollifier/anyframe"
