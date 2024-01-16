@@ -20,4 +20,4 @@ precmd() {
 export STARSHIP_CONFIG=${DOTFILES_DIR}/config/starship.toml
 eval "$(starship init zsh)"
 
-eval "$(rtx activate zsh)"
+eval "$(mise activate zsh)"
