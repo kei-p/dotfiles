@@ -58,3 +58,5 @@ config/locales/copy_tuner.yml
 null
 
 /config/credentials/*.key
+
+.mise.toml

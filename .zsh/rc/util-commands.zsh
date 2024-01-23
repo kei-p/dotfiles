@@ -7,7 +7,7 @@ rails-db-schema-regenerate() {
 }
 
 overmind-start() {
-  dev-app-release-port
+  dev-rails-release-port
   rm ./.overmind.sock
 
   while (( $# > 0 ))
@@ -47,12 +47,25 @@ release-port() {
   lsof -i:$1 | sed -e '1d' | awk '{print $2}' | xargs kill -9
 }
 
-dev-app-release-port() {
+dev-rails-release-port() {
   echo "dev-app-release-port"
-  release-port ${RAILS_PORT}
-  release-port ${WEBPACKER_DEV_SERVER_PORT}
+  release-port $(dev-rails-app-port)
+  release-port $(dev-rails-jsbuild-port)
   kill -9 `ps aux | grep 'puma' | grep ":${RAILS_PORT}" | awk '{print $2}'`
   rm tmp/pids/server.pid
+}
+
+dev-rails-app-name() {
+  basename `pwd`
+}
+
+dev-rails-app-port() {
+  app_name=$(dev-rails-app-name)
+  head -n1 ~/.puma-dev/$app_name
+}
+
+dev-rails-jsbuild-port() {
+  expr $(dev-rails-app-port) + 10000
 }
 
 rails-credentials() {
