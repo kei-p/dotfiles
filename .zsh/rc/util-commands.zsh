@@ -92,3 +92,6 @@ rails-credentials() {
   eval $exec_command
 }
 
+kill-port() {
+ kill -9 $(lsof -t -i:$1)
+}
