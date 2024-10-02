@@ -60,3 +60,10 @@ null
 /config/credentials/*.key
 
 .mise.toml
+.workspace
+
+/tmp
+.local
+.irbrc
+.irb_history
+.yarn
