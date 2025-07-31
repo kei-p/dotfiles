@@ -59,11 +59,17 @@ null
 
 /config/credentials/*.key
 
-.mise.toml
-.workspace
+/.mise.toml
+/.workspace
 
 /tmp
 .local
 .irbrc
 .irb_history
 .yarn
+
+/coverage-*
+.cloudflared
+
+
+/.claude/settings.local.json
