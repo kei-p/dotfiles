@@ -6,9 +6,13 @@ rails-db-schema-regenerate() {
   bin/rails db:environment:set RAILS_ENV=test && RAILS_ENV=test bin/rails db:migrate:reset
 }
 
+kill-port() {
+  kill -9 $(lsof -t -i:$1)
+}
+
 overmind-start() {
-  dev-rails-release-port
-  rm ./.overmind.sock
+  dev-rails-release-processes
+  rm ./.overmind.sock 2> /dev/null
 
   while (( $# > 0 ))
   do
@@ -42,17 +46,18 @@ overmind-start() {
 }
 
 release-port() {
-  echo "releasing $1 port using process"
+  echo "releasing port $1 using process"
   lsof -i:$1
   lsof -i:$1 | sed -e '1d' | awk '{print $2}' | xargs kill -9
 }
 
-dev-rails-release-port() {
+dev-rails-release-processes() {
   echo "dev-app-release-port"
   release-port $(dev-rails-app-port)
   release-port $(dev-rails-jsbuild-port)
-  kill -9 `ps aux | grep 'puma' | grep ":${RAILS_PORT}" | awk '{print $2}'`
-  rm tmp/pids/server.pid
+  echo "releasing puma port ${RAILS_PORT} using"
+  ps aux | grep 'puma' | grep ":${RAILS_PORT}" | awk '{print $2}' | xargs kill -9
+  rm tmp/pids/server.pid 2> /dev/null
 }
 
 dev-rails-app-name() {
@@ -90,8 +95,4 @@ rails-credentials() {
   echo "  $exec_command\n"
 
   eval $exec_command
-}
-
-kill-port() {
- kill -9 $(lsof -t -i:$1)
 }
