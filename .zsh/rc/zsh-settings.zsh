@@ -13,7 +13,7 @@ setopt ignore_eof         # ^Dでログアウトを無効化
 
 ## History
 export HISTFILE=${HOME}/.zsh_history
-export HISTSIZE=1000
+export HISTSIZE=10000
 export SAVEHIST=10000
 setopt hist_ignore_dups     # 履歴の重複を記録しない
 setopt hist_ignore_all_dups # 重複した際に古いものを削除

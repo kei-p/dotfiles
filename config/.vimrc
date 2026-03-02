@@ -17,6 +17,7 @@ set softtabstop=2
 set expandtab
 set hlsearch
 set incsearch
+set nf=alpha,hex
 
 " 特殊記号の表示変更
 set list

@@ -3,3 +3,6 @@ export SHELDON_CONFIG_FILE=${DOTFILES_DIR}/config/sheldon/plugins.toml
 export ENHANCD_FILTER=peco
 
 eval "$(sheldon source)"
+
+eval "$(mise activate zsh)"
+eval "$(mise activate --shims)"
