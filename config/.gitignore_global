@@ -60,6 +60,7 @@ null
 /config/credentials/*.key
 
 /.mise.toml
+/mise.toml
 /.workspace
 
 /tmp
@@ -73,3 +74,5 @@ null
 
 
 /.claude/settings.local.json
+config/database.yml
+Procfile.local
