@@ -189,7 +189,6 @@ call neobundle#end()
 "" colorscheme
 let g:rehash256 = 1
 colorscheme molokai
-colorscheme custom
 syntax on
 highlight Normal ctermbg=none
 

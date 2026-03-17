@@ -6,6 +6,7 @@ bindkey "^[[1;5D" backward-word
 bindkey \^U backward-kill-line
 
 ## zsh settings
+setopt append_history
 setopt share_history      # historyの共有
 setopt auto_pushd         # cdするたびpushd
 setopt pushd_ignore_dups  # pushd時の重複を無視
