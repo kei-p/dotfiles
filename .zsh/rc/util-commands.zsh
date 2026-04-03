@@ -96,3 +96,18 @@ rails-credentials() {
 
   eval $exec_command
 }
+
+gh-check-failure() {
+  run_id=$1
+
+  if [ -z $run_id ]; then
+    current_branch_name=$(git symbolic-ref --short HEAD)
+    run_id=$(gh run list --branch $current_branch_name --json databaseId,name,createdAt | jq -r '[.[] | select(.name | contains("rspec") or contains("Ruby"))] | sort_by(.createdAt) | last | .databaseId')
+  fi
+
+  gh run view --log-failed $run_id | grep "rspec ./spec" | grep -oE '\./spec/\S+' | sort -u
+}
+
+gh-wait() {
+  gh run watch -i1 && afplay /System/Library/Sounds/Glass.aiff
+}

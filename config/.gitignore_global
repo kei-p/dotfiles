@@ -76,3 +76,5 @@ null
 /.claude/settings.local.json
 config/database.yml
 Procfile.local
+
+/logs
