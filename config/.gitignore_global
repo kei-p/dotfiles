@@ -78,3 +78,5 @@ config/database.yml
 Procfile.local
 
 /logs
+
+.gwq.toml

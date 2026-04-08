@@ -111,3 +111,14 @@ gh-check-failure() {
 gh-wait() {
   gh run watch -i1 && afplay /System/Library/Sounds/Glass.aiff
 }
+
+dc-build() {
+  docker build -t $(basename `pwd`) .
+}
+
+cc-worktree() {
+  worktree_name=$1
+  gwq add -b ${worktree_name} \
+    && cd $(gwq get ${worktree_name}) \
+    && claude
+}
