@@ -1,13 +1,38 @@
 { pkgs, ... }:
 
 {
-  system.stateVersion = 5;
-  system.primaryUser = "kei-p";
   nixpkgs.hostPlatform = "aarch64-darwin";
 
-  system.defaults.dock.orientation = "left";
+  users.users.kei-p = {
+    name = "kei-p";
+    home = "/Users/kei-p";
+  };
 
-  system.activationScripts.postActivation.text = ''
-    /usr/bin/killall Dock || true
-  '';
+  system = {
+    stateVersion = 5;
+    primaryUser = "kei-p";
+
+    defaults = {
+      dock.orientation = "left";
+
+      NSGlobalDomain = {
+        KeyRepeat = 2;
+        InitialKeyRepeat = 15;
+        "com.apple.mouse.tapBehavior" = 1;
+      };
+
+      trackpad = {
+        Clicking = true;
+        TrackpadRightClick = true;
+      };
+
+      controlcenter = {
+        BatteryShowPercentage = true;
+      };
+    };
+
+    activationScripts.postActivation.text = ''
+      /usr/bin/killall Dock || true
+    '';
+  };
 }
