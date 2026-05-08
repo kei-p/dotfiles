@@ -8,6 +8,16 @@
     home = "/Users/kei-p";
   };
 
+  homebrew = {
+    enable = true;
+    brews = [
+      "puma-dev"
+    ];
+    casks = [
+      "ghostty"
+    ];
+  };
+
   system = {
     stateVersion = 5;
     primaryUser = "kei-p";
