@@ -80,3 +80,8 @@ Procfile.local
 /logs
 
 .gwq.toml
+/.local
+.mcp.json
+.claude/worktrees
+.claude/launch.json
+.worktreeinclude
