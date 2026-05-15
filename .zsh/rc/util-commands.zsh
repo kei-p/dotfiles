@@ -122,3 +122,23 @@ cc-worktree() {
     && cd $(gwq get ${worktree_name}) \
     && claude
 }
+
+find-unused-app-port() {
+  start_port="${1:-3130}"
+
+  port=$start_port
+  max_port=$((START_PORT + 100))
+  while lsof -iTCP:"$port" -sTCP:LISTEN -t >/dev/null 2>&1; do
+    port=$((port + 1))
+    if [ "$port" -gt "$max_port" ]; then
+      echo "Error: No available port found in range $START_PORT-$max_port" >&2
+      exit 1
+    fi
+  done
+
+  echo "$port"
+}
+
+find-app-port() {
+  head -n1 ~/.puma-dev/$(basename `pwd`) 2> /dev/null | find-unused-app-port
+}
