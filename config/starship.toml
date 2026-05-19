@@ -1,6 +1,6 @@
 # refs: https://starship.rs/ja-JP/config/#%E3%83%95%E3%82%9A%E3%83%AD%E3%83%B3%E3%83%95%E3%82%9A%E3%83%88
 
-format = '$all'
+format = '$custom$all'
 right_format = '$time'
 
 [directory]
@@ -27,4 +27,17 @@ stashed = '$'
 modified = '!${count}'
 renamed = '»'
 deleted = '✘'
-format = '([\[$all_status$ahead_behind\]]($style))'
+format = '([\[$all_status$ahead_behind\]]($style)) '
+
+[custom.worktree]
+description = "Show <main-repo> when inside a non-main git worktree"
+when = '''
+  test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = "true" && \
+  test "$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)" != "$(git rev-parse --show-toplevel 2>/dev/null)/.git"
+'''
+command = '''
+  COMMON=$(git rev-parse --path-format=absolute --git-common-dir)
+  basename "$(dirname "$COMMON")"
+'''
+format = '[\[$output\]]($style) '
+style = 'cyan bold'
