@@ -143,19 +143,42 @@ find-app-port() {
   head -n1 ~/.puma-dev/$(basename `pwd`) 2> /dev/null | find-unused-app-port
 }
 
-git-warp-main() {
-  branch=$1
-  if [ -z "$branch" ]; then
-    echo "Usage: git-warp-main <branch>"
-    return 1
-  fi
-
-  common_dir=$(git rev-parse --path-format=absolute --git-common-dir 2> /dev/null)
-  if [ -z "$common_dir" ]; then
+git-warp() {
+  if ! git rev-parse --git-dir > /dev/null 2>&1; then
     echo "Not in a git repository"
     return 1
   fi
 
-  main_repo=$(dirname "$common_dir")
-  cd "$main_repo" && git checkout "$branch"
+  branch=$1
+  if [ -z "$branch" ]; then
+    if ! command -v fzf > /dev/null 2>&1; then
+      echo "Usage: git-warp <branch>"
+      return 1
+    fi
+    branch=$(git branch --format='%(refname:short)' | fzf --height=40% --reverse --prompt='branch> ')
+    if [ -z "$branch" ]; then
+      return 1
+    fi
+  fi
+
+  if ! git show-ref --verify --quiet "refs/heads/$branch"; then
+    echo "Branch '$branch' does not exist"
+    return 1
+  fi
+
+  current_worktree=$(git rev-parse --path-format=absolute --show-toplevel)
+  target_worktree=$(git worktree list --porcelain | awk -v b="refs/heads/$branch" '
+    /^worktree / { wt = substr($0, 10) }
+    /^branch / && $2 == b { print wt; exit }
+  ')
+
+  if [ -n "$target_worktree" ]; then
+    if [ "$target_worktree" = "$current_worktree" ]; then
+      echo "Already on '$branch'"
+      return 0
+    fi
+    cd "$target_worktree"
+  else
+    git checkout "$branch"
+  fi
 }
