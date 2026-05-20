@@ -182,3 +182,66 @@ git-warp() {
     git checkout "$branch"
   fi
 }
+
+git-deploy-staging() {
+  if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    echo "Not in a git repository"
+    return 1
+  fi
+
+  if ! git diff --quiet || ! git diff --cached --quiet; then
+    echo "Working tree is not clean. Commit or stash your changes first."
+    return 1
+  fi
+
+  branch=$1
+  if [ -z "$branch" ]; then
+    if ! command -v fzf > /dev/null 2>&1; then
+      echo "Usage: git-deploy-staging <branch>"
+      return 1
+    fi
+    branch=$(git branch --format='%(refname:short)' | fzf --height=40% --reverse --prompt='deploy to staging> ')
+    if [ -z "$branch" ]; then
+      return 1
+    fi
+  fi
+
+  if ! git show-ref --verify --quiet "refs/heads/$branch"; then
+    echo "Branch '$branch' does not exist"
+    return 1
+  fi
+
+  if [ "$branch" = "staging" ]; then
+    echo "Cannot deploy 'staging' to itself"
+    return 1
+  fi
+
+  original_branch=$(git symbolic-ref --short HEAD)
+
+  echo "==> git fetch origin"
+  git fetch origin || return 1
+
+  echo "==> git checkout staging"
+  git checkout staging || return 1
+
+  echo "==> git merge --ff-only origin/staging"
+  git merge --ff-only origin/staging || {
+    git checkout "$original_branch"
+    return 1
+  }
+
+  echo "==> git merge --no-ff $branch"
+  if ! git merge --no-ff "$branch"; then
+    echo "Merge failed. Resolve conflicts on 'staging' and push manually."
+    return 1
+  fi
+
+  echo "==> git push origin staging"
+  git push origin staging || {
+    echo "Push failed. You are still on 'staging'."
+    return 1
+  }
+
+  echo "==> git checkout $original_branch"
+  git checkout "$original_branch"
+}
