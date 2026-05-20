@@ -142,3 +142,20 @@ find-unused-app-port() {
 find-app-port() {
   head -n1 ~/.puma-dev/$(basename `pwd`) 2> /dev/null | find-unused-app-port
 }
+
+git-warp-main() {
+  branch=$1
+  if [ -z "$branch" ]; then
+    echo "Usage: git-warp-main <branch>"
+    return 1
+  fi
+
+  common_dir=$(git rev-parse --path-format=absolute --git-common-dir 2> /dev/null)
+  if [ -z "$common_dir" ]; then
+    echo "Not in a git repository"
+    return 1
+  fi
+
+  main_repo=$(dirname "$common_dir")
+  cd "$main_repo" && git checkout "$branch"
+}
