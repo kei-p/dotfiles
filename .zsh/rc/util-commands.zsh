@@ -179,6 +179,10 @@ git-warp() {
     fi
     cd "$target_worktree"
   else
+    main_repo=$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)")
+    if [ "$main_repo" != "$current_worktree" ]; then
+      cd "$main_repo" || return 1
+    fi
     git checkout "$branch"
   fi
 }

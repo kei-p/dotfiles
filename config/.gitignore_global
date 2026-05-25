@@ -85,3 +85,4 @@ Procfile.local
 .claude/worktrees
 .claude/launch.json
 .worktreeinclude
+.pnpm-store
