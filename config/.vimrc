@@ -10,6 +10,12 @@ endif
 set nocompatible
 set backspace=start,eol,indent
 
+" modifyOtherKeys を無効化
+" 検索(/)などで端末モードが切り替わったあとに <C-e> 等のマッピングが
+" 効かなくなる現象を回避するため
+let &t_TI = ""
+let &t_TE = ""
+
 set number
 set tabstop=2
 set shiftwidth=2
