@@ -5,3 +5,7 @@ export ENHANCD_FILTER="fzf --height 40% --reverse:fzy"
 eval "$(sheldon source)"
 
 eval "$(mise activate --shims)"
+
+fpath=(/Users/kei-p/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
