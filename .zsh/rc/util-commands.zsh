@@ -73,10 +73,18 @@ dev-rails-jsbuild-port() {
   expr $(dev-rails-app-port) + 10000
 }
 
+rails-app-name() {
+  if git rev-parse --git-dir > /dev/null 2>&1; then
+    basename "$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)")"
+  else
+    basename "$(pwd)"
+  fi
+}
+
 rails-credentials() {
   command=$1
   env=$2
-  app=`basename $(pwd)`
+  app=${APP_NAME:-$(rails-app-name)}
   if [ -z $env ] || [ -z $app ] || [ -z $command ]; then
     echo "Invalid arguments. Please run rails-credentials [command] [app] [env]"
     return 1
@@ -95,6 +103,70 @@ rails-credentials() {
   echo "  $exec_command\n"
 
   eval $exec_command
+}
+
+rails-credentials-diff() {
+  hash=$1
+  env=$2
+  app=${APP_NAME:-$(rails-app-name)}
+  if [ -z $hash ] || [ -z $env ]; then
+    echo "Invalid arguments. Please run rails-credentials-diff [hash] [env]"
+    return 1
+  fi
+
+  cred_file="config/credentials/$env.yml.enc"
+  if [ ! -e $cred_file ]; then
+    echo "$cred_file not found"
+    return 1
+  fi
+
+  if ! git cat-file -e "$hash:$cred_file" 2> /dev/null; then
+    echo "$cred_file not found at $hash"
+    return 1
+  fi
+
+  op whoami > /dev/null || eval $(op signin)
+  op whoami > /dev/null 2> /dev/null
+
+  if [ $? -ne 0 ]; then
+    echo "Failed 1Password signin"
+    return 1
+  fi
+
+  master_key=$(op read op://dev/$app-rails-credentials/$env)
+  if [ -z "$master_key" ]; then
+    echo "Failed to read master key from 1Password"
+    return 1
+  fi
+
+  old_enc=$(mktemp tmp/credentials-diff.XXXXXX)
+  if [ -z "$old_enc" ]; then
+    echo "Failed to create temp file (does tmp/ exist?)"
+    return 1
+  fi
+
+  git show "$hash:$cred_file" > $old_enc || { rm -f $old_enc; return 1 }
+
+  decrypt='require "active_support/encrypted_configuration"; puts ActiveSupport::EncryptedConfiguration.new(config_path: ARGV[0], key_path: "", env_key: "RAILS_MASTER_KEY", raise_if_missing_key: true).read'
+
+  old_plain=$(RAILS_MASTER_KEY=$master_key bundle exec ruby -e "$decrypt" $old_enc)
+  if [ $? -ne 0 ]; then
+    echo "Failed to decrypt $cred_file at $hash"
+    rm -f $old_enc
+    return 1
+  fi
+  rm -f $old_enc
+
+  new_plain=$(RAILS_MASTER_KEY=$master_key bundle exec ruby -e "$decrypt" $cred_file)
+  if [ $? -ne 0 ]; then
+    echo "Failed to decrypt $cred_file (current)"
+    return 1
+  fi
+
+  diff -u --color=auto -L "$hash" -L "current" <(echo "$old_plain") <(echo "$new_plain")
+  if [ $? -eq 0 ]; then
+    echo "No differences"
+  fi
 }
 
 gh-check-failure() {
@@ -177,7 +249,13 @@ git-warp() {
       echo "Already on '$branch'"
       return 0
     fi
-    cd "$target_worktree"
+    old_head=$(git rev-parse HEAD 2>/dev/null)
+    cd "$target_worktree" || return 1
+    new_head=$(git rev-parse HEAD 2>/dev/null)
+    post_checkout_hook=$(git rev-parse --git-path hooks/post-checkout)
+    if [ -x "$post_checkout_hook" ]; then
+      "$post_checkout_hook" "$old_head" "$new_head" 1
+    fi
   else
     main_repo=$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)")
     if [ "$main_repo" != "$current_worktree" ]; then
