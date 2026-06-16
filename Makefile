@@ -8,6 +8,9 @@ list:
 
 link:
 		@$(foreach val, $(DOTFILES_FILES), ln -sfnv $(abspath $(val)) $(HOME)/`basename $(val)`;)
+		@mkdir -p $(HOME)/.config/zed
+		@ln -sfnv $(abspath ./config/zed/settings.json) $(HOME)/.config/zed/settings.json
+		@ln -sfnv $(abspath ./config/zed/keymap.json)   $(HOME)/.config/zed/keymap.json
 
 init:
 		@$(foreach val, $(wildcard ./init/*.sh), DOTFILES_DIR=$(DOTFILES_DIR) bash $(val);)

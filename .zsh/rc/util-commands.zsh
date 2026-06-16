@@ -303,6 +303,11 @@ git-deploy-staging() {
   echo "==> git fetch origin"
   git fetch origin || return 1
 
+  if ! git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+    echo "Remote branch 'origin/$branch' does not exist. Push it first."
+    return 1
+  fi
+
   echo "==> git checkout staging"
   git checkout staging || return 1
 
@@ -312,8 +317,8 @@ git-deploy-staging() {
     return 1
   }
 
-  echo "==> git merge --no-ff $branch"
-  if ! git merge --no-ff "$branch"; then
+  echo "==> git merge --no-ff origin/$branch"
+  if ! git merge --no-ff "origin/$branch"; then
     echo "Merge failed. Resolve conflicts on 'staging' and push manually."
     return 1
   fi

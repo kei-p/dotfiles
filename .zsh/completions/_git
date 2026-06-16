@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2012-2020 Felipe Contreras <felipe.contreras@gmail.com>
 #
-# The recommended way to install this script is to make a copy of it as a
+# The ommended way to install this script is to make a copy of it as a
 # file named '_git' inside any directory in your fpath.
 #
 # For example, create a directory '~/.zsh/', copy this file to '~/.zsh/_git',

@@ -1,0 +1,22 @@
+// Zed keymap
+//
+// .ideavimrc から移行したキーバインド
+// https://zed.dev/docs/key-bindings
+[
+  {
+    "context": "Editor && vim_mode == normal && !menu",
+    "bindings": {
+      // <C-e> NERDTree toggle -> project panel (left dock)
+      "ctrl-e": "workspace::ToggleLeftDock",
+      // <Leader>o CtrlP -> file finder
+      "space o": "file_finder::Toggle",
+      // <Leader>w :w -> save
+      "space w": "workspace::Save",
+      // <Leader>q :q -> close active item
+      "space q": "pane::CloseActiveItem",
+      // <C-w>[ / <C-w>] tab 移動
+      "ctrl-w [": "pane::ActivatePreviousItem",
+      "ctrl-w ]": "pane::ActivateNextItem"
+    }
+  }
+]
