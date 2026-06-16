@@ -22,6 +22,8 @@
     ripgrep
     jq
     fzf
+    git
+    curl
     ghq
     gh
     direnv
