@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ "${RAILS_ENV:-development}" != "development" ]; then
+  echo "Error: bin/dev-db-dump runs only in RAILS_ENV=development (got: ${RAILS_ENV})" >&2
+  exit 1
+fi
+export RAILS_ENV=development
+
+DUMP_PATH="${DEV_DB_DUMP_PATH:-tmp/dev-db.dump}"
+PG_DUMP_IMAGE="${PG_DUMP_IMAGE:-postgres:16-alpine}"
+
+if [ ! -f bin/rails ]; then
+  echo "Error: must be run from a Rails project root (bin/rails not found)" >&2
+  exit 1
+fi
+
+if ! command -v docker >/dev/null 2>&1; then
+  echo "Error: docker not found" >&2
+  exit 1
+fi
+
+echo "Reading DB config via Rails ..." >&2
+CONFIG_SH=$(bin/rails runner '
+  require "shellwords"
+  c = ActiveRecord::Base.connection_db_config.configuration_hash
+  puts "DB_HOST=#{(c[:host] || "localhost").to_s.shellescape}"
+  puts "DB_PORT=#{(c[:port] || 5432).to_s.shellescape}"
+  puts "DB_USER=#{(c[:username] || ENV["USER"]).to_s.shellescape}"
+  puts "DB_PASSWORD=#{(c[:password] || "").to_s.shellescape}"
+  puts "DB_NAME=#{c[:database].to_s.shellescape}"
+')
+
+eval "$CONFIG_SH"
+
+HOST_FOR_DOCKER="${DB_HOST}"
+if [ "${HOST_FOR_DOCKER}" = "localhost" ] || [ "${HOST_FOR_DOCKER}" = "127.0.0.1" ]; then
+  HOST_FOR_DOCKER="host.docker.internal"
+fi
+
+mkdir -p "$(dirname "${DUMP_PATH}")"
+
+echo "Dumping ${DB_NAME} from ${DB_HOST}:${DB_PORT} as ${DB_USER} (via ${PG_DUMP_IMAGE}) ..." >&2
+docker run --rm \
+  -e PGPASSWORD="${DB_PASSWORD}" \
+  "${PG_DUMP_IMAGE}" \
+  pg_dump -h "${HOST_FOR_DOCKER}" -p "${DB_PORT}" -U "${DB_USER}" -d "${DB_NAME}" \
+  -F p --no-owner --no-acl \
+  > "${DUMP_PATH}"
+
+SIZE=$(du -h "${DUMP_PATH}" | cut -f1)
+echo "Saved: ${DUMP_PATH} (${SIZE})" >&2
+echo "${DUMP_PATH}"

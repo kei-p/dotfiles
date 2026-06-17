@@ -1,0 +1,75 @@
+#!/bin/bash
+# 新規 worktree のセットアップを実行する。
+# .git/hooks/post-checkout から呼ばれる想定だが、手動実行も可能。
+
+set -euo pipefail
+
+# Claude Desktop など PATH が貧弱な環境でも mise/pnpm/direnv を見つけられるように補う
+export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate bash)" || true
+fi
+
+GIT_COMMON_DIR=$(git rev-parse --path-format=absolute --git-common-dir)
+MAIN_REPO=$(cd "$GIT_COMMON_DIR/.." && pwd)
+WORKTREE_ROOT=$(git rev-parse --show-toplevel)
+
+# メインリポジトリからコピーする個人設定ファイル
+COPY_FILES=(
+  ".envrc"
+  "config/database.yml"
+  "config/credentials/development.key"
+  "config/credentials/test.key"
+  "Procfile.local"
+)
+
+copy_files_from_main_repo() {
+  echo "==> Copying files from main repository"
+  for f in "${COPY_FILES[@]}"; do
+    local src="$MAIN_REPO/$f"
+    local dst="$WORKTREE_ROOT/$f"
+    if [ -e "$src" ]; then
+      mkdir -p "$(dirname "$dst")"
+      cp "$src" "$dst"
+      echo "    copied: $f"
+    else
+      echo "    skipped (not found): $f"
+    fi
+  done
+}
+
+# 1コマンドが失敗しても残りは続行する (mise/direnv が未インストールでも止めないため)
+run_step() {
+  local desc="$1"; shift
+  echo "--- $desc"
+  if "$@"; then
+    echo "    ok"
+  else
+    echo "    failed (continuing): $desc" >&2
+  fi
+}
+
+run_setup_commands() {
+  echo "==> Running setup commands"
+  cd "$WORKTREE_ROOT"
+  run_step "mise trust"   mise trust
+  run_step "direnv allow" direnv allow
+  run_step "pnpm install" pnpm install
+}
+
+main() {
+  echo "==> Worktree setup"
+  echo "    worktree: $WORKTREE_ROOT"
+  echo "    main:     $MAIN_REPO"
+
+  if [ "$MAIN_REPO" = "$WORKTREE_ROOT" ]; then
+    return 0
+  fi
+
+  copy_files_from_main_repo
+  run_setup_commands
+
+  echo "==> Worktree setup completed"
+}
+
+main "$@"

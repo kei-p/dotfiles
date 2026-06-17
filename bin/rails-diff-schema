@@ -1,0 +1,3 @@
+RAILS_ENV=development bin/rails db:schema:dump && cat db/schema.rb > tmp/schema.dump.dev
+RAILS_ENV=test bin/rails db:schema:dump && cat db/schema.rb > tmp/schema.dump.test
+diff tmp/schema.dump.dev tmp/schema.dump.test

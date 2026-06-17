@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+function __find-unused-app-port() {
+  start_port="${1:-3200}"
+
+  port=$start_port
+  max_port=$((start_port + 100))
+  while lsof -iTCP:"$port" -sTCP:LISTEN -t >/dev/null 2>&1; do
+    port=$((port + 1))
+    if [ "$port" -gt "$max_port" ]; then
+      echo "Error: No available port found in range $start_port-$max_port" >&2
+      return 1
+    fi
+  done
+
+  echo "$port"
+}
+
+__find-unused-app-port "$(head -n1 ~/.puma-dev/$(basename "$PWD") 2>/dev/null)"
