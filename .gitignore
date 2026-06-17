@@ -4,3 +4,4 @@
 .zsh/zinit
 .vim/.netrwhist
 nix/result
+.zsh/completions/
