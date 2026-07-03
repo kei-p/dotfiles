@@ -23,7 +23,9 @@
   dbranch = branch -D
   cbranch = "!f(){ git nbranch \"$2\" \"$1/$2\";};f"
   close-issue = "!f(){ git commit --allow-empty -m \"Closed #$1\";};f"
-  delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
+  list-merged-branches = !git branch --merged origin/release-candidate
+  delete-merged-branches = !git branch --merged origin/release-candidate | grep -vE '^[*+]|release-candidate|staging|main|master' | xargs -r git branch -d
+  delete-merged-worktrees = "!git worktree list --porcelain | awk '/^worktree /{w=$2} /^branch /{sub(\"refs/heads/\",\"\",$2); print w\" \"$2}' | while read -r p b; do case \"$b\" in release-candidate|staging|main|master) continue;; esac; if [ -n \"$(git -C \"$p\" status --porcelain)\" ]; then echo \"skipped (dirty): $p ($b)\"; continue; fi; git branch --merged origin/release-candidate | sed 's/^[*+ ]*//' | grep -qx \"$b\" && git worktree remove -f \"$p\" && echo \"removed: $p ($b)\"; done"
 [color]
   ui = auto
 [log]
