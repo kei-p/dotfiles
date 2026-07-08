@@ -21,6 +21,7 @@ COPY_FILES=(
   "config/credentials/development.key"
   "config/credentials/test.key"
   "Procfile.local"
+  "tmp/dev-db.dump"
 )
 
 copy_files_from_main_repo() {
