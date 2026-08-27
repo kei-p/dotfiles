@@ -1,6 +1,9 @@
 #!/bin/bash
-# 新規 worktree のセットアップを実行する。
-# .git/hooks/post-checkout から呼ばれる想定だが、手動実行も可能。
+# 新規 worktree のセットアップ (秘密ファイルのコピー + ツール初期化) を実行する。
+# Claude Desktop では SessionStart フックから、それ以外では手動で実行する想定。
+# stdin には依存せず、カレントディレクトリ (git worktree 配下) だけで動く。
+# 冪等: 何度呼んでも worktree 側の編集を壊さない (コピーは no-clobber、
+#       重い pnpm install は node_modules が無いときだけ)。
 
 set -euo pipefail
 
@@ -8,6 +11,11 @@ set -euo pipefail
 export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate bash)" || true
+fi
+
+# git worktree/リポジトリの外なら何もしない (フックは全セッションで発火するため)
+if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  exit 0
 fi
 
 GIT_COMMON_DIR=$(git rev-parse --path-format=absolute --git-common-dir)
@@ -31,8 +39,13 @@ copy_files_from_main_repo() {
     local dst="$WORKTREE_ROOT/$f"
     if [ -e "$src" ]; then
       mkdir -p "$(dirname "$dst")"
-      cp "$src" "$dst"
-      echo "    copied: $f"
+      # no-clobber: worktree 側で編集済みのファイルは上書きしない
+      if [ -e "$dst" ]; then
+        echo "    kept (exists): $f"
+      else
+        cp "$src" "$dst"
+        echo "    copied: $f"
+      fi
     else
       echo "    skipped (not found): $f"
     fi
@@ -55,17 +68,23 @@ run_setup_commands() {
   cd "$WORKTREE_ROOT"
   run_step "mise trust"   mise trust
   run_step "direnv allow" direnv allow
-  run_step "pnpm install" pnpm install
+  # pnpm install は重いので依存が未展開のときだけ
+  if [ -d node_modules ]; then
+    echo "--- pnpm install (skipped: node_modules exists)"
+  else
+    run_step "pnpm install" pnpm install
+  fi
 }
 
 main() {
-  echo "==> Worktree setup"
-  echo "    worktree: $WORKTREE_ROOT"
-  echo "    main:     $MAIN_REPO"
-
+  # メインリポジトリでの実行は対象外 (無音で終了。全セッションで発火するため)
   if [ "$MAIN_REPO" = "$WORKTREE_ROOT" ]; then
     return 0
   fi
+
+  echo "==> Worktree setup"
+  echo "    worktree: $WORKTREE_ROOT"
+  echo "    main:     $MAIN_REPO"
 
   copy_files_from_main_repo
   run_setup_commands
