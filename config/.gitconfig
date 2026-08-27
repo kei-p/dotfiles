@@ -25,7 +25,7 @@
   close-issue = "!f(){ git commit --allow-empty -m \"Closed #$1\";};f"
   list-merged-branches = !git branch --merged origin/release-candidate
   delete-merged-branches = !git branch --merged origin/release-candidate | grep -vE '^[*+]|release-candidate|staging|main|master' | xargs -r git branch -d
-  delete-merged-worktrees = "!git worktree list --porcelain | awk '/^worktree /{w=$2} /^branch /{sub(\"refs/heads/\",\"\",$2); print w\" \"$2}' | while read -r p b; do case \"$b\" in release-candidate|staging|main|master) continue;; esac; if [ -n \"$(git -C \"$p\" status --porcelain)\" ]; then echo \"skipped (dirty): $p ($b)\"; continue; fi; git branch --merged origin/release-candidate | sed 's/^[*+ ]*//' | grep -qx \"$b\" && git worktree remove -f \"$p\" && echo \"removed: $p ($b)\"; done"
+  delete-merged-worktrees = "!f(){ git rev-parse --verify -q origin/release-candidate >/dev/null || { echo 'origin/release-candidate が見つかりません'; return 1; }; git worktree list --porcelain | awk '/^worktree /{w=$2} /^branch /{sub(\"refs/heads/\",\"\",$2); print $2\" \"w}' | while read -r b p; do case \"$b\" in release-candidate|staging|main|master) continue;; esac; if ! git merge-base --is-ancestor \"refs/heads/$b\" origin/release-candidate 2>/dev/null; then echo \"skipped (unmerged): $p ($b)\"; continue; fi; st=$(git -C \"$p\" status --porcelain 2>/dev/null) || { echo \"skipped (status failed): $p ($b)\"; continue; }; if [ -n \"$st\" ]; then echo \"skipped (dirty): $p ($b)\"; continue; fi; if git worktree remove \"$p\"; then echo \"removed: $p ($b)\"; else echo \"skipped (remove refused): $p ($b)\"; fi; done; }; f"
 [color]
   ui = auto
 [log]
