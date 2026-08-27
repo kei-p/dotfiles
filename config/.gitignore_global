@@ -88,3 +88,4 @@ Procfile.local
 .pnpm-store
 
 **/.claude/settings.local.json
+.claude/plans
